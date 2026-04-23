@@ -20,7 +20,6 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-@login_required
 def liste_posts(request):
     query = request.GET.get('q', '')
     if query:
@@ -39,6 +38,8 @@ def liste_posts(request):
         'query': query
     })
 
+@login_required
+
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -46,12 +47,13 @@ def post_create(request):
             post = form.save(commit=False)
             post.auteur = request.user
             post.save()
-            return redirect('liste_post')
+            return redirect('liste_posts')
     else:
         form = PostForm()
     return render(request, 'posts/post_form.html', {'form': form, 'action': 'Créer'})
 
 
+@login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     commentaires = CommentModel.objects.filter(post=post)
@@ -76,13 +78,13 @@ def post_detail(request, pk):
 def post_update(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.user != post.auteur:
-        return redirect('liste_post')
+        return redirect('liste_posts')
 
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('liste_post')
+            return redirect('liste_posts')
     else:
         form = PostForm(instance=post)
     return render(request, 'posts/post_form.html', {'form': form, 'action': 'Modifier'})
