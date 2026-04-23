@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription · SheCodes</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #fdf6f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            border: 0.5px solid #f0d6e4;
+            padding: 2.5rem 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-text {
+            font-family: Georgia, serif;
+            font-size: 26px;
+            color: #d4608a;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 500;
+            color: #3a2030;
+            text-align: center;
+            margin-bottom: 0.25rem;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #a07090;
+            text-align: center;
+            margin-bottom: 1.75rem;
+        }
+
+        .field { margin-bottom: 1rem; }
+
+        label {
+            display: block;
+            font-size: 13px;
+            color: #7a5060;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 11px 14px;
+            border: 0.5px solid #e8c8d8;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #3a2030;
+            background: #fdf6f9;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input:focus { border-color: #d4608a; }
+
+        .help-text {
+            font-size: 11px;
+            color: #b090a0;
+            margin-top: 0.3rem;
+        }
+
+        .errorlist {
+            list-style: none;
+            background: #fdf0f4;
+            border: 0.5px solid #f0c0d0;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-top: 0.3rem;
+            font-size: 12px;
+            color: #a03050;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #d4608a;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 0.75rem;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: #c0507a; }
+
+        .link-row {
+            text-align: center;
+            margin-top: 1.25rem;
+            font-size: 13px;
+            color: #a07090;
+        }
+
+        .link-row a {
+            color: #d4608a;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="logo">
+        <div class="logo-text">✦ SheCodes</div>
+    </div>
+
+    <h2>Créer un compte</h2>
+    <p class="subtitle">Rejoignez notre communauté de blogueuses</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.help_text %}
+                <p class="help-text">{{ field.help_text }}</p>
+            {% endif %}
+            {% if field.errors %}
+                <ul class="errorlist">
+                    {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="btn">Créer mon compte</button>
+    </form>
+
+    <div class="link-row">
+        Déjà un compte ? <a href="{% url 'login' %}">Se connecter</a>
+    </div>
+</div>
+
+</body>
+</html>
