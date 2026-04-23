@@ -6,4 +6,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('post.urls')),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('summernote/', include('django_summernote.urls')),
 ]
