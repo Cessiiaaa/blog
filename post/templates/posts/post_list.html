@@ -27,7 +27,7 @@
                     <h5 class="card-title mt-2">{{ post.titre }}</h5>
                     <p class="card-text">{{ post.description }}</p>
                     <p class="text-muted" style="font-size:13px;">Par {{ post.auteur }} • {{ post.date_creation }}</p>
-                    <a href="{% url 'detail_post' post.pk %}" class="btn btn-she mt-2">Lire</a>
+                    <a href="{% url 'post_detail' post.pk %}" class="btn btn-she mt-2">Lire</a>
                 </div>
             </div>
         </div>
