@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>SheCodes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SheBrights</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --she-pink: #D4537E;
+            --she-pink-light: #FBEAF0;
+            --she-purple: #7F77DD;
+        }
+        .navbar-brand { color: var(--she-pink) !important; font-weight: 500; }
+        .navbar-brand span { color: var(--she-purple); }
+        .hero { background: var(--she-pink-light); padding: 48px 24px; text-align: center; }
+        .hero h1 { color: #72243E; }
+        .hero-tag { background: #EEEDFE; color: #534AB7; font-size: 12px; padding: 4px 12px; border-radius: 20px; }
+        .btn-she { background: var(--she-pink); color: white; border-radius: 20px; border: none; }
+        .btn-she:hover { background: #72243E; color: white; }
+        .card-tag { font-size: 11px; background: var(--she-pink-light); color: #993556; padding: 3px 10px; border-radius: 20px; display: inline-block; }
+        footer { border-top: 0.5px solid #eee; padding: 20px; text-align: center; }
+        footer span { color: var(--she-pink); }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'liste_posts' %}">She<span>Codes</span> ✦</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'liste_posts' %}">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Articles</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="#">{{ user.username }}</a></li>
+                        <li class="nav-item"><a class="nav-link btn-she px-3 ms-2" href="{% url 'post_create' %}">Écrire</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Déconnexion</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Connexion</a></li>
+                        <li class="nav-item"><a class="nav-link btn-she px-3 ms-2" href="{% url 'signup' %}">Inscription</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- CONTENU DE CHAQUE PAGE -->
+    <main class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="text-center mt-5">
+        <p>© 2026 SheCodes</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

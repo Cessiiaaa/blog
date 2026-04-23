@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="hero">
+    <span class="hero-tag">✦ SheBrights</span>
+    <h1 class="mt-3">Inspire. Apprends. Brille.</h1>
+    <p>Un espace pour les femmes passionnées de tech, carrière et éducation.</p>
+</div>
+
+<!-- BARRE DE RECHERCHE -->
+<div class="container mt-4">
+    <form method="GET">
+        <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Rechercher un article...">
+    </form>
+</div>
+
+<!-- LISTE DES ARTICLES -->
+<div class="container mt-4">
+    <div class="row">
+        {% for post in page_obj %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <span class="card-tag">{{ post.categorie }}</span>
+                    <h5 class="card-title mt-2">{{ post.titre }}</h5>
+                    <p class="card-text">{{ post.description }}</p>
+                    <p class="text-muted" style="font-size:13px;">Par {{ post.auteur }} • {{ post.date_creation }}</p>
+                    <a href="{% url 'detail_post' post.pk %}" class="btn btn-she mt-2">Lire</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted">Aucun article trouvé.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- PAGINATION -->
+<div class="container text-center mt-4 mb-5">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-she">Précédent</a>
+    {% endif %}
+    <span class="mx-3">Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="btn btn-she">Suivant</a>
+    {% endif %}
+</div>
+
+{% endblock %}
