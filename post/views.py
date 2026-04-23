@@ -40,24 +40,21 @@ def liste_posts(request):
     })
 
 def post_create(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False) 
-            post.auteur = request.user 
+            post = form.save(commit=False)
+            post.auteur = request.user
             post.save()
             return redirect('liste_posts')
-        else:
-            form = PostForm()
-        return render(request, 'creer_post.html',{'form':form, 'action': 'Créer'})
+    else:
+        form = PostForm()
+    return render(request, 'creer_post.html', {'form': form, 'action': 'Créer'})
 
+    
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'posts_etudiants/post_detail.html', {'post': post})
-
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    commentaires = CommentForm.objects.filter(post=post)
+    commentaires = CommentModel.objects.filter(post=post)
     form = CommentForm()
 
     if request.method == 'POST':
