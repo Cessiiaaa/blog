@@ -34,7 +34,7 @@ def liste_posts(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'list_posts.html', {
+    return render(request, 'posts/post_list.html', {
         'page_obj': page_obj,
         'query': query
     })
@@ -46,12 +46,12 @@ def post_create(request):
             post = form.save(commit=False)
             post.auteur = request.user
             post.save()
-            return redirect('liste_posts')
+            return redirect('liste_post')
     else:
         form = PostForm()
-    return render(request, 'creer_post.html', {'form': form, 'action': 'Créer'})
+    return render(request, 'posts/post_form.html', {'form': form, 'action': 'Créer'})
 
-    
+
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     commentaires = CommentModel.objects.filter(post=post)
@@ -64,9 +64,9 @@ def post_detail(request, pk):
             commentaire.post = post
             commentaire.auteur = request.user
             commentaire.save()
-            return redirect('detail_post', pk=pk)
+            return redirect('post_detail', pk=pk)
 
-    return render(request, 'post/post_detail.html', {
+    return render(request, 'posts/post_detail.html', {
         'post': post,
         'commentaires': commentaires,
         'form': form
@@ -76,24 +76,24 @@ def post_detail(request, pk):
 def post_update(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.user != post.auteur:
-        return redirect('liste_posts')
+        return redirect('liste_post')
 
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('liste_posts')
+            return redirect('liste_post')
     else:
         form = PostForm(instance=post)
-    return render(request, 'posts_etudiants/post_form.html', {'form': form, 'action': 'Modifier'})
+    return render(request, 'posts/post_form.html', {'form': form, 'action': 'Modifier'})
 
 @login_required
 def post_delete(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.user != post.auteur:
         return redirect('liste_posts')
-
+    
     if request.method == 'POST':
         post.delete()
         return redirect('liste_posts')
-    return render(request, 'post_confirm_delete.html', {'post': post})
+    return render(request, 'posts/post_confirm_delete.html', {'post': post})
