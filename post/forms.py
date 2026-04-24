@@ -1,5 +1,6 @@
 from django import forms
 from .models import Post, CommentModel, User
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django_summernote.widgets import SummernoteWidget
 
@@ -7,7 +8,7 @@ from django_summernote.widgets import SummernoteWidget
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['titre', 'auteur','categorie', 'description', 'contenu']
+        fields = ['titre','categorie', 'description', 'contenu']
         widgets = {
             'contenu': SummernoteWidget(),
         }

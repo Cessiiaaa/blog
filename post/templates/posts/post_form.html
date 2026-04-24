@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 
-{% load summernote %}
-{% summernote_head %}
-
 {% block content %}
 <div class="container mt-5">
     <div class="card p-4" style="max-width: 700px; margin: 0 auto;">
@@ -11,12 +8,9 @@
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-she mt-2">{{ post.titre }}</button>
+            <button type="submit" class="btn btn-she mt-2">{{ action }}</button>
             <a href="{% url 'liste_posts' %}" class="btn btn-outline-secondary mt-2 ms-2">Annuler</a>
         </form>
     </div>
 </div>
-
-{% summernote_script %}
-
 {% endblock %}
